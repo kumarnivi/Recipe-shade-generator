@@ -2,7 +2,7 @@
 import React,{useState,useEffect} from 'react'
 import './App.css';
 import Recipe from './components/Recipe';
-import Header from './components/Header'
+
 
 
 const App = () => {
@@ -33,7 +33,6 @@ const App = () => {
   
   return (
     <div className="App">
-      <Header/>
       <form className="search-form" onSubmit={getSearch}  >
         <input className="search-bar" type="text" value={search}
              onChange={updateSearch} />

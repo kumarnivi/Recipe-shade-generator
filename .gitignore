@@ -26,5 +26,5 @@ yarn-error.log*
 src/components/Class.js
 src/components/classstate.js
 /src/components/functionstate.js
-/src/components/Header
+/src/components/Header.js
 /src/components/Profile.js
