@@ -1,60 +1,77 @@
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 
-import React,{useState,useEffect} from 'react'
-import './App.css';
-import Recipe from './components/Recipe';
+const YOUR_APP_ID = "6c8956b9";
+const YOUR_APP_KEY = "a2a6ce308de52f5688b2f0db7594265d";
 
-
-
-const App = () => {
-  const APP_ID = '6131d8c6';
-  const APP_KEY ='42003cd4f49b09370831cdba4e8dda50';
+function App() {
   const [recipes, setRecipes] = useState([]);
   const [search, setSearch] = useState("");
-  const [query, setQuery] = useState("chicken");
+  const [query, setQuery] = useState("");
+
+  
+
+  const getRecipes = async () => {
+    const response = await axios.get(
+      `https://api.edamam.com/search?q=${query}&app_id=${YOUR_APP_ID}&app_key=${YOUR_APP_KEY}`
+    );
+    setRecipes(response.data.hits);
+    console.log(response.data.hits);
+  };
+  
   useEffect(() => {
     getRecipes();
-  }, [query])
-  const getRecipes = async () => {
-    const response = await fetch
-          (`https://api.edamam.com/search?q=chicken&app_id=${APP_ID}&app_key=${APP_KEY}`);
-    const data = await response.json();
-    setRecipes(data.hits);
-    // console.log(data);
-  
-  };
-  const updateSearch = e => {
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [query]);
+
+  const updateSearch = (e) => {
     setSearch(e.target.value);
   };
-  const getSearch = e => {
+
+  const getSearch = (e) => {
     e.preventDefault();
     setQuery(search);
     setSearch("");
-  }
-  
+  };
+
   return (
     <div className="App">
-      <form className="search-form" onSubmit={getSearch}  >
-        <input className="search-bar" type="text" value={search}
-             onChange={updateSearch} />
-        <button className="search-button" type="submit" >
-             Search
+      <header>
+        <h1>Food Recipe App</h1>
+      </header>
+      <form onSubmit={getSearch} className="search-form">
+        <input
+          type="text"
+          className="search-bar"
+          value={search}
+          onChange={updateSearch}
+        />
+        <button type="submit" className="search-button">
+          Search
         </button>
       </form>
       <div className="recipes">
-        {recipes.map(recipe => (
-          <Recipe
-            key={recipe.recipe.label}
-            title={recipe.recipe.label}
-            calories={recipe.recipe.calories}
-            image={recipe.recipe.image}
-            ingredients={recipe.recipe.ingredients}
-          />
-  
+        {recipes.map((recipe) => (
+          <div className="recipe" key={recipe.recipe.label}>
+            <h2>{recipe.recipe.label}</h2>
+            <img
+              className="recipe-image"
+              src={recipe.recipe.image}
+              alt={recipe.recipe.label}
+            />
+            <ul className="ingredients">
+              {recipe.recipe.ingredients.map((ingredient) => (
+                <li key={ingredient.text}>{ingredient.text}</li>
+              ))}
+            </ul>
+            <a className="recipe-link" href={recipe.recipe.url}>
+              View Recipe
+            </a>
+          </div>
         ))}
       </div>
-  
     </div>
   );
 }
-  
+
 export default App;
