@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import '../src/App.css'
 
 const YOUR_APP_ID = "6c8956b9";
 const YOUR_APP_KEY = "a2a6ce308de52f5688b2f0db7594265d";
@@ -35,10 +36,12 @@ function App() {
   };
 
   return (
+    <div className="mainApp">
     <div className="App">
+      <div style={{}}>
       <header>
-        <h1>Food Recipe App</h1>
-      </header>
+        <h1 style={{color:"#2A4E45"}}>Food Recipe App</h1> 
+      </header> 
       <form onSubmit={getSearch} className="search-form">
         <input
           type="text"
@@ -50,6 +53,7 @@ function App() {
           Search
         </button>
       </form>
+      </div>
       <div className="recipes">
         {recipes.map((recipe) => (
           <div className="recipe" key={recipe.recipe.label}>
@@ -70,6 +74,7 @@ function App() {
           </div>
         ))}
       </div>
+    </div>
     </div>
   );
 }

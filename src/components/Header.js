@@ -50,6 +50,3 @@ const Header = () => {
 }
 export default Header
 
-// const rootElement = document.getElementById('root')
-// we render the App component using the ReactDOM package
-// ReactDOM.render(<Header />)
